@@ -1,0 +1,49 @@
+.nav-color {
+  width: 100%;
+  height: 40px;
+  background-color: #562b81;
+}
+
+.logo {
+  color: white;
+  padding-left: 10px;
+  background: #562b81;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  float: left;
+  position: absolute;
+  left: 10px;
+}
+
+.placeholder-img {
+  width: 100%;
+  border-radius: 4px;
+  position: relative;
+}
+
+.save {
+  width: 72px;
+  height: 32px;
+  left: 285px;
+  top: 794px;
+  font-family: "Open Sans", serif;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 22px;
+  background-color: #562b81;
+  color: white;
+  border-radius: 4px;
+  float: right;
+}
+
+input {
+  border-radius: 4px;
+  background: white;
+  border-color: #b6b6b6;
+  width: 100%;
+}
+
+textarea {
+  width: 100%;
+}
