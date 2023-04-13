@@ -19,6 +19,7 @@
   width: 100%;
   border-radius: 4px;
   position: relative;
+  object-fit: contain;
 }
 
 .save {
@@ -46,4 +47,34 @@ input {
 
 textarea {
   width: 100%;
+}
+
+body {
+  background: #f0f0f0;
+}
+
+ul {
+  list-style-type: none;
+}
+
+img {
+  width: 100%;
+}
+
+.new-entry-button {
+  padding: 5px 10px;
+  background-color: #562b81;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.nav-title {
+  color: white;
+  padding-left: 10px;
+  background: #562b81;
+  padding-top: 10px;
+  padding-bottom: 10px;
 }
