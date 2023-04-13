@@ -32,3 +32,31 @@
     width: 50%;
   }
 }
+
+h1 {
+  margin-left: 2.5rem;
+}
+
+.new-entry-button {
+  position: relative;
+  float: right;
+  bottom: 50px;
+}
+
+.nav-title {
+  margin-left: 20rem;
+  position: absolute;
+}
+
+.no-entries {
+  position: relative;
+  left: 110px;
+}
+
+.entries-nav {
+  position: relative;
+  bottom: 28px;
+  left: 120px;
+  color: white;
+  font-size: small;
+}
