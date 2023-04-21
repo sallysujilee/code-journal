@@ -1,4 +1,4 @@
-const photoUrlInput = document.getElementById('photo-url');
+const photoUrlInput = document.getElementById('photoUrl');
 const photoPreview = document.querySelector('.placeholder-img');
 
 photoUrlInput.addEventListener('input', function () {
@@ -7,31 +7,43 @@ photoUrlInput.addEventListener('input', function () {
 
 const form = document.querySelector('#contact-form');
 form.addEventListener('submit', function (event) {
+
   event.preventDefault();
-  const title = document.querySelector('#title').value;
-  const photoUrl = document.querySelector('#photo-url').value;
-  const text = document.querySelector('#notes').value;
-  const entryId = data.nextEntryId;
-  data.nextEntryId++;
-  const newEntry = {
-    entryId,
-    title,
-    photoUrl,
-    text
-  };
-  data.entries.unshift(newEntry);
   const placeholderImage = 'images/placeholder-image-square.jpg';
   const previewImage = document.querySelector('.placeholder-img');
   previewImage.setAttribute('src', placeholderImage);
+
+  if (data.editing === null) {
+    const entryId = data.nextEntryId;
+    data.nextEntryId++;
+    const newEntry = {};
+    newEntry.title = form.elements.title.value;
+    newEntry.photoUrl = form.elements.photoUrl.value;
+    newEntry.text = form.elements.notes.value;
+    newEntry.entryId = entryId;
+    data.entries.unshift(newEntry);
+    $ul.prepend(renderEntry(newEntry));
+  } else {
+    data.editing.photoUrl = form.elements.photoUrl.value;
+    data.editing.title = form.elements.title.value;
+    data.editing.text = form.elements.notes.value;
+    const $entriesList = document.querySelectorAll('li');
+    for (let i = 0; i < $entriesList.length; i++) {
+      if (parseInt($entriesList[i].getAttribute('data-entry-id')) === data.editing.entryId) {
+        $entriesList[i].replaceWith(renderEntry(data.editing));
+      }
+    }
+  }
+
   form.reset();
-  location.reload();
-  viewSwap('entries');
+  viewSwap('entries', 'entry-form');
+  data.editing = null;
 });
 
 function renderEntry(entry) {
   const $li = document.createElement('li');
   $li.className = 'entry';
-  // $li.dataset.entryId = entry.id;
+  $li.setAttribute('data-entry-id', entry.entryId);
 
   const $container = document.createElement('div');
   $container.className = 'container';
@@ -53,10 +65,26 @@ function renderEntry(entry) {
   $textContainer.className = 'column-half';
   $row.appendChild($textContainer);
 
+  const $titleRow = document.createElement('div');
+  $titleRow.className = 'row';
+  $textContainer.appendChild($titleRow);
+
+  const $columnFourFifths = document.createElement('div');
+  $columnFourFifths.className = 'column-four-fifths';
+  $titleRow.appendChild($columnFourFifths);
+
+  const $columnOneFifths = document.createElement('div');
+  $columnOneFifths.className = 'column-one-fifths';
+  $titleRow.appendChild($columnOneFifths);
+
   const $h2 = document.createElement('h2');
   $h2.className = 'entry-title';
   $h2.textContent = entry.title;
-  $textContainer.appendChild($h2);
+  $columnFourFifths.appendChild($h2);
+
+  const $pencilIcon = document.createElement('i');
+  $pencilIcon.className = 'fa fa-pencil pencil-icon';
+  $columnOneFifths.appendChild($pencilIcon);
 
   const $p = document.createElement('p');
   $p.className = 'entry-text';
@@ -66,6 +94,34 @@ function renderEntry(entry) {
   return $li;
 
 }
+
+const $ul = document.querySelector('ul');
+$ul.addEventListener('click', function (event) {
+
+  if (event.target.tagName === 'I') {
+    const $editItem = event.target.closest('li.entry');
+
+    const $searchId = Number($editItem.getAttribute('data-entry-id'));
+
+    for (let i = 0; i < data.entries.length; i++) {
+
+      if (data.entries[i].entryId === $searchId) {
+        data.editing = data.entries[i];
+
+        break;
+      }
+    }
+
+    document.querySelector('#title').value = data.editing.title;
+    document.querySelector('#photoUrl').value = data.editing.photoUrl;
+    document.querySelector('#notes').value = data.editing.text;
+    document.querySelector('.placeholder-img').src = data.editing.photoUrl;
+    document.querySelector('.heading-title').textContent = 'Edit Entry';
+    viewSwap('entry-form', 'New Entry');
+
+  }
+
+});
 
 document.addEventListener('DOMContentLoaded', () => {
   const entriesList = document.querySelector('[data-view="entries"] ul');
@@ -104,6 +160,6 @@ function viewSwap(viewName) {
 }
 
 const newEntryButton = document.querySelector('.new-entry-button');
-newEntryButton.addEventListener('click', () => {
+newEntryButton.addEventListener('click', function () {
   viewSwap('entry-form');
 });
