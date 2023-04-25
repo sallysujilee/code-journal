@@ -123,7 +123,7 @@ $ul.addEventListener('click', function (event) {
 
 });
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', function () {
   const entriesList = document.querySelector('[data-view="entries"] ul');
   if (data.entries.length > 0) {
     toggleNoEntries(false);
@@ -162,4 +162,35 @@ function viewSwap(viewName) {
 const newEntryButton = document.querySelector('.new-entry-button');
 newEntryButton.addEventListener('click', function () {
   viewSwap('entry-form');
+});
+
+const cancelDeleteButton = document.querySelector('.cancel-delete-button');
+const confirmDeleteButton = document.querySelector('.confirm-delete-button');
+
+cancelDeleteButton.addEventListener('click', function () {
+  const modal = document.querySelector('.confirmation-modal');
+  modal.classList.add('hidden');
+});
+
+confirmDeleteButton.addEventListener('click', function () {
+  const editedEntryId = data.editing.entryId;
+  const editedEntryIndex = data.entries.findIndex(entry => entry.entryId === editedEntryId);
+
+  data.entries.splice(editedEntryIndex, 1);
+
+  const editedEntryElement = document.querySelector(`li[data-entry-id="${editedEntryId}"]`);
+  editedEntryElement.remove();
+
+  if (data.entries.length === 0) {
+    toggleNoEntries(true);
+  }
+
+  const modal = document.querySelector('.confirmation-modal');
+  modal.classList.add('hidden');
+  viewSwap('entries');
+});
+
+const deleteButton = document.querySelector('.delete-entry-button');
+deleteButton.addEventListener('click', function () {
+  document.querySelector('.confirmation-modal').classList.remove('hidden');
 });

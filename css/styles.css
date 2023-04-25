@@ -82,3 +82,63 @@ img {
 .pencil-icon {
   color: #562b81;
 }
+
+.confirmation-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.6);
+}
+
+.confirmation-modal-content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  height: 10rem;
+  width: 30rem;
+  border-radius: 0.5rem;
+  text-align: center;
+  padding-top: 1rem;
+  font-size: 1.5rem;
+}
+
+.confirm-delete-button {
+  background-color: #dc2626;
+  border: none;
+  color: white;
+  border-radius: 0.25rem;
+  padding-top: 0.45rem;
+  padding-bottom: 0.45rem;
+  width: 6.5rem;
+  font-size: large;
+  text-align: center;
+  position: relative;
+  left: 14rem;
+  top: 1.25rem;
+}
+
+.cancel-delete-button {
+  background-color: #b6b6b6;
+  border: none;
+  color: black;
+  border-radius: 0.25rem;
+  padding-top: 0.45rem;
+  padding-bottom: 0.45rem;
+  width: 6rem;
+  font-size: large;
+  text-align: center;
+  position: relative;
+  right: 14rem;
+  top: 1.25rem;
+}
+
+.delete-entry-button {
+  border: none;
+  color: red;
+  text-decoration: underline;
+  padding-top: 1rem;
+}
