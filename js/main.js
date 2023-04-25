@@ -91,15 +91,6 @@ function renderEntry(entry) {
   $p.textContent = entry.text;
   $textContainer.appendChild($p);
 
-  const $deleteButton = document.createElement('button');
-  $deleteButton.textContent = 'Delete Entry';
-  $deleteButton.className = 'delete-entry-button';
-  $deleteButton.addEventListener('click', function () {
-    const modal = document.querySelector('.confirmation-modal');
-    modal.classList.remove('hidden');
-  });
-  $textContainer.appendChild($deleteButton);
-
   return $li;
 
 }
@@ -182,7 +173,7 @@ cancelDeleteButton.addEventListener('click', function () {
 });
 
 confirmDeleteButton.addEventListener('click', function () {
-  const editedEntryId = document.querySelector('.entry-form').dataset.entryId;
+  const editedEntryId = data.editing.entryId;
   const editedEntryIndex = data.entries.findIndex(entry => entry.entryId === editedEntryId);
 
   data.entries.splice(editedEntryIndex, 1);
@@ -197,4 +188,9 @@ confirmDeleteButton.addEventListener('click', function () {
   const modal = document.querySelector('.confirmation-modal');
   modal.classList.add('hidden');
   viewSwap('entries');
+});
+
+const deleteButton = document.querySelector('.delete-entry-button');
+deleteButton.addEventListener('click', function () {
+  document.querySelector('.confirmation-modal').classList.remove('hidden');
 });
